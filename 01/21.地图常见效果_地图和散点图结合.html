@@ -62,7 +62,7 @@
       }
     ]
     var mCharts = echarts.init(document.querySelector("div"))
-    $.get('json/map/china.json', function (ret) {
+    $.get('https://geo.datav.aliyun.com/areas_v2/bound/100000_full.json', function (ret) {
       // ret 就是中国的各个省份的矢量地图数据
       console.log(ret)
       echarts.registerMap('chinaMap', ret)

@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: wsz
+ * @Date: 2021-04-06 20:58:44
+ * @LastEditors: wsz
+ * @LastEditTime: 2021-04-06 22:28:44
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +28,7 @@
     //4. 在Ajax的回调函数中注册地图矢量数据 echarts.registerMap('chinaMap', 矢量地图数据)
     //5. 配置geo的type为'map', map为'chinaMap' 
     var mCharts = echarts.init(document.querySelector("div"))
-    $.get('json/map/china.json', function (ret) {
+    $.get('https://geo.datav.aliyun.com/areas_v2/bound/100000_full.json', function (ret) {
       // ret 就是中国的各个省份的矢量地图数据
       // console.log(ret)
       echarts.registerMap('chinaMap', ret)

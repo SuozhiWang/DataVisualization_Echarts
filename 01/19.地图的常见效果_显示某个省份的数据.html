@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: wsz
+ * @Date: 2021-04-06 20:58:44
+ * @LastEditors: wsz
+ * @LastEditTime: 2021-04-06 22:29:49
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +28,7 @@
     //4. 通过zoom调整缩放比例
     //5. 通过center调整中心点 
     var mCharts = echarts.init(document.querySelector("div"))
-    $.get('json/map/anhui.json', function (ret) {
+    $.get('https://geo.datav.aliyun.com/areas_v2/bound/100000_full.json', function (ret) {
       console.log(ret)
       echarts.registerMap('anhui', ret)
       var option = {

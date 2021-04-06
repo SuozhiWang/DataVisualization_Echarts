@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: wsz
+ * @Date: 2021-04-06 20:58:44
+ * @LastEditors: wsz
+ * @LastEditTime: 2021-04-06 21:26:10
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +20,7 @@
 <body>
   <div style="width: 600px;height:400px"></div>
   <script>
+    //通用配置 tooltip
     var mCharts = echarts.init(document.querySelector("div"))
     var xDataArr = ['张三', '李四', '王五', '闰土', '小明', '茅台', '二妞', '大强']
     var yDataArr = [88, 92, 63, 77, 94, 80, 72, 86]
@@ -28,10 +37,10 @@
         top: 10
       },
       tooltip: {
-        // trigger: 'item'
-        trigger: 'axis',
+        trigger: 'item',
+        // trigger: 'axis',
         triggerOn: 'click',
-        // formatter: '{b} 的成绩是 {c}'
+        // formatter: '{b} 的成绩是 {c}',
         formatter: function(arg){
           return arg[0].name + '的分数是:' + arg[0].data
         }
