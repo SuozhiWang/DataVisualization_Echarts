@@ -2,28 +2,30 @@
  * @Descripttion: 
  * @version: 
  * @Author: wsz
- * @Date: 2021-04-09 10:22:34
+ * @Date: 2021-04-09 17:30:52
  * @LastEditors: wsz
- * @LastEditTime: 2021-04-09 17:27:16
+ * @LastEditTime: 2021-04-09 21:11:06
 -->
 <template>
   <div class="com-page">
-    <trend></trend>
+    <single-map></single-map>
   </div>
 </template>
 
 <script>
-import Trend from '@/components/Trend'
+import Map from "@/components/Map"
 export default {
-  data () {
-    return {}
+  data() {
+    return {
+    }
   },
   methods: {},
   components: {
-    trend: Trend
+      'single-map': Map
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style scoped>
+
 </style>
