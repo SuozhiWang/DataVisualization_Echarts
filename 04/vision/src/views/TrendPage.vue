@@ -1,11 +1,3 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: wsz
- * @Date: 2021-04-09 10:22:34
- * @LastEditors: wsz
- * @LastEditTime: 2021-04-09 17:27:16
--->
 <template>
   <div class="com-page">
     <trend></trend>

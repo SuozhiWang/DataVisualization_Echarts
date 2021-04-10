@@ -16,7 +16,6 @@ export default {
       timerId: null // 定时器的标识
     }
   },
-  // 整个组件加载完成之后的操作
   mounted () {
     this.initChart()
     this.getData()
@@ -26,7 +25,7 @@ export default {
   },
   destroyed () {
     clearInterval(this.timerId)
-    // 在组件销毁的时候, 需要将监听器取消掉，避免内存泄露
+    // 在组件销毁的时候, 需要将监听器取消掉
     window.removeEventListener('resize', this.screenAdapter)
   },
   methods: {
@@ -148,7 +147,6 @@ export default {
         if (this.currentPage > this.totalPage) {
           this.currentPage = 1
         }
-        // 更新图表
         this.updateChart()
       }, 3000)
     },
