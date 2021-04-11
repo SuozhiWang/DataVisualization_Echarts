@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { getThemeValue } from '@/utils/theme_utils'
 export default {
   data () {
     return {
@@ -17,6 +19,10 @@ export default {
       currentIndex: 0, // 当前所展示出的一级分类数据
       titleFontSize: 0
     }
+  },
+  created () {
+    // 在组件创建完成之后 进行回调函数的注册
+    this.$socket.registerCallBack('hotData', this.getData)
   },
   computed: {
     catName () {
@@ -28,13 +34,11 @@ export default {
     },
     comStyle () {
       return {
-        fontSize: this.titleFontSize + 'px'
+        fontSize: this.titleFontSize + 'px',
+        color: getThemeValue(this.theme).titleColor
       }
-    }
-  },
-  created () {
-    // 在组件创建完成之后，进行回调函数的注册
-    this.$socket.registerCallBack('hotData',this.getData)
+    },
+    ...mapState(['theme'])
   },
   mounted () {
     this.initChart()
@@ -54,7 +58,7 @@ export default {
   },
   methods: {
     initChart () {
-      this.chartInstance = this.$echarts.init(this.$refs.hot_ref,'chalk')
+      this.chartInstance = this.$echarts.init(this.$refs.hot_ref, this.theme)
       const initOption = {
         title: {
           text: '▎ 热销商品的占比',
@@ -67,7 +71,6 @@ export default {
         },
         tooltip: {
           show: true,
-          // formatter 可支持现实内容 支持回调函数
           formatter: arg => {
             // console.log(arg)
             const thirdCategory = arg.data.children
@@ -108,9 +111,8 @@ export default {
     getData (ret) {
       // 获取服务器的数据, 对this.allData进行赋值之后, 调用updateChart方法更新图表
       // const { data: ret } = await this.$http.get('hotproduct')
-
       this.allData = ret
-    //   console.log(this.allData)
+      console.log(this.allData)
       this.updateChart()
     },
     updateChart () {
@@ -146,8 +148,8 @@ export default {
           }
         },
         legend: {
-          itemWidth: this.titleFontSize / 2,
-          itemHeight: this.titleFontSize / 2,
+          itemWidth: this.titleFontSize,
+          itemHeight: this.titleFontSize,
           itemGap: this.titleFontSize / 2,
           textStyle: {
             fontSize: this.titleFontSize / 2
@@ -155,7 +157,7 @@ export default {
         },
         series: [
           {
-            radius: this.titleFontSize * 5,
+            radius: this.titleFontSize * 4.5,
             center: ['50%', '60%']
           }
         ]
@@ -176,6 +178,15 @@ export default {
         this.currentIndex = 0
       }
       this.updateChart()
+    }
+  },
+  watch: {
+    theme () {
+      console.log('主题切换了')
+      this.chartInstance.dispose() // 销毁当前的图表
+      this.initChart() // 重新以最新的主题名称初始化图表对象
+      this.screenAdapter() // 完成屏幕的适配
+      this.updateChart() // 更新图表的展示
     }
   }
 }

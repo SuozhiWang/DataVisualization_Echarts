@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import axios from 'axios'
 import { getProvinceMapInfo } from '@/utils/map_utils'
 export default {
@@ -17,8 +18,8 @@ export default {
     }
   },
   created () {
-    // 在组件创建完成之后，进行回调函数的注册
-    this.$socket.registerCallBack('mapData',this.getData)
+    // 在组件创建完成之后 进行回调函数的注册
+    this.$socket.registerCallBack('mapData', this.getData)
   },
   mounted () {
     this.initChart()
@@ -38,7 +39,7 @@ export default {
   },
   methods: {
     async initChart () {
-      this.chartInstance = this.$echarts.init(this.$refs.map_ref, 'chalk')
+      this.chartInstance = this.$echarts.init(this.$refs.map_ref, this.theme)
       // 获取中国地图的矢量数据
       // http://localhost:8999/static/map/china.json
       // 由于我们现在获取的地图矢量数据并不是位于KOA2的后台, 所以咱们不能使用this.$http
@@ -149,6 +150,18 @@ export default {
         }
       }
       this.chartInstance.setOption(revertOption)
+    }
+  },
+  computed: {
+    ...mapState(['theme'])
+  },
+  watch: {
+    theme () {
+      console.log('主题切换了')
+      this.chartInstance.dispose() // 销毁当前的图表
+      this.initChart() // 重新以最新的主题名称初始化图表对象
+      this.screenAdapter() // 完成屏幕的适配
+      this.updateChart() // 更新图表的展示
     }
   }
 }
