@@ -10,7 +10,8 @@
       <span class="title">电商平台实时监控系统</span>
       <div class="title-right">
         <img :src="themeSrc" class="qiehuan" @click="handleChangeTheme">
-        <span class="datetime">2049-01-01 00:00:00</span>
+        <span>{{date.H}}:{{date.M}}:{{date.S}}</span>
+        <!-- <span class="datetime">2021</span> -->
       </div>
     </header>
     <div class="screen-body">
@@ -82,15 +83,6 @@ import Trend from '@/components/Trend.vue'
 import { mapState } from 'vuex'
 import { getThemeValue } from '@/utils/theme_utils'
 export default {
-  created () {
-    // 注册接收到数据的回调函数
-    this.$socket.registerCallBack('fullScreen', this.recvData)
-    this.$socket.registerCallBack('themeChange', this.recvThemeChange)
-  },
-  destroyed () {
-    this.$socket.unRegisterCallBack('fullScreen')
-    this.$socket.unRegisterCallBack('themeChange')
-  },
   data () {
     return {
       // 定义每一个图表的全屏状态
@@ -101,7 +93,8 @@ export default {
         rank: false,
         hot: false,
         stock: false
-      }
+      },
+      date: { H: " ", M: " ", S: " " }
     }
   },
   methods: {
@@ -145,7 +138,22 @@ export default {
     },
     recvThemeChange () {
       this.$store.commit('changeTheme')
-    }
+    },
+    // 获取当前时间
+    getDate() {
+      setInterval(() => {
+        var mydate = new Date();
+        mydate.toLocaleString('zh', { hour12: false });  
+        var _hour = mydate.getHours()
+        var _minute = mydate.getMinutes()
+        var _second = mydate.getSeconds()
+        this.date.H = _hour
+        this.date.M = _minute
+        this.date.S = _second
+      }, 1000);
+    },
+    
+
   },
   components: {
     Hot,
@@ -155,6 +163,17 @@ export default {
     Stock,
     Trend
   },
+  created () {
+    // 注册接收到数据的回调函数
+    this.$socket.registerCallBack('fullScreen', this.recvData)
+    this.$socket.registerCallBack('themeChange', this.recvThemeChange)
+    this.getDate();
+  },
+  destroyed () {
+    this.$socket.unRegisterCallBack('fullScreen')
+    this.$socket.unRegisterCallBack('themeChange')
+  },
+  
   computed: {
     logoSrc () {
       return '/static/img/' + getThemeValue(this.theme).logoSrc

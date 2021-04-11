@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: wsz
+ * @Date: 2021-04-10 17:34:24
+ * @LastEditors: wsz
+ * @LastEditTime: 2021-04-11 15:01:33
+ */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -17,7 +25,6 @@ axios.defaults.baseURL = 'http://127.0.0.1:8888/api/'
 // 将axios挂载到Vue的原型对象上
 // 在别的组件中 this.$http
 Vue.prototype.$http = axios
-
 // 将全局的echarts对象挂载到Vue的原型对象上
 // 别的组件中 this.$echarts
 Vue.prototype.$echarts = window.echarts
